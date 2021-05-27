@@ -8,3 +8,5 @@ Pour lancer cette application, il faut installer streamlit avec la commande `pip
 Pour vérifier que l'installation s'est bien déroulée, vous pouvez lancer `streamlit hello`.
 
 Pour lancer l'application faite pendant la masterclass, lancez `streamlit run demo_streamlit.py`.
+
+Merci.
