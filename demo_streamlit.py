@@ -9,28 +9,88 @@ import streamlit as st
 import pandas as pd
 
 from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.tree import DecisionTreeClassifier
 
-st.title("Démo Streamlit Mar21 DA DS")
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+from preprocessing import generate_train_data
+from modelisation import get_model
+
+page = st.sidebar.radio("", options = ['Présentation', 'Modélisation']) 
 
 df = pd.read_csv("train.csv", index_col = 'PassengerId')
 
-st.write(df)
+if page == 'Présentation':
+    st.title("Démo Streamlit Mar21 DA DS")
+    
+    st.markdown("""
+                Ce projet va entraîner un modèle de Machine Learning
+                sur le dataset du [titanic](https://www.kaggle.com/c/titanic/overview).
+                
+                                
+                
+                """)
+    
+    img = plt.imread("titanic.jpg")
+    
+    st.image(img)
+    
+    sns.countplot(df['Survived'])
+    
+    fig = plt.gcf()
 
-X = df.drop('Survived', axis = 1)
-y = df['Survived']
+    st.pyplot(fig) 
+    
+    
+    
+    st.markdown("""
+                Voici un aperçu du dataset.
+                
+                """)
+    st.write(df)
+
+if page == 'Modélisation':
+    
+    # Import et nettoyage des données
+    
+    X, y = generate_train_data()
+    
+    # Split des données
+    
+    X_train, X_test, y_train, y_test = train_test_split(X, y,test_size = 0.2, random_state = 1)
+    
+    # Entrainement du modèle
+    
+    options = ['Regression Logistique', 'KNN', 'Decision Tree']
+    
+    choix = st.radio("Choisissez un modèle", options = options) 
+    
+    model, score = get_model(choix, X_train, y_train, X_test, y_test)
+           
+        
+    st.markdown("""
+                Ce modèle a obtenu un score de :
+                
+                """)    
+    st.write(score)
 
 
-# Nettoyage
 
-X = X.drop(['Name', 'Ticket', 'Cabin'], axis = 1)
-X['Sex'] = X['Sex'].apply(lambda x : x == 'female')
-X['Age'] = X['Age'].fillna(X['Age'].mode()[0])
-X['Embarked'] = X['Embarked'].fillna(X['Embarked'].mode()[0])
 
-st.write(X.isna().sum())
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
