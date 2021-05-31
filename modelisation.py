@@ -18,17 +18,17 @@ def get_model(choix, X_train, y_train, X_test, y_test):
 
     options = ['Regression Logistique', 'KNN', 'Decision Tree']
     if choix == options[0]:
-        model = load("logreg.joblib")
+        model = load("models/logreg.joblib")
         
         score = model.score(X_test, y_test)
         
     if choix == options[1]:
-        model = load("knn.joblib")
+        model = load("models/knn.joblib")
         
         score = model.score(X_test, y_test)
         
     if choix == options[2]:
-        model = load("tree.joblib")
+        model = load("models/tree.joblib")
         
         score = model.score(X_test, y_test)
         

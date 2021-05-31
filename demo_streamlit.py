@@ -32,7 +32,7 @@ if page == 'Présentation':
                 
                 """)
     
-    img = plt.imread("titanic.jpg")
+    img = plt.imread("assets/titanic.jpg")
     
     st.image(img)
     
